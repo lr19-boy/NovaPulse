@@ -3,8 +3,9 @@ NovaPulse ⚡ — A feature-packed, modular Discord bot for server management, g
 
 ## 📜 `README.md` for **NovaPulse**
 
-```markdown
 # 🚀 NovaPulse ⚡
+
+```markdown
 
 A modular, feature-rich Discord bot designed for server management, games, and community engagement. Built with love in Node.js and JavaScript!
 
