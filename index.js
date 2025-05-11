@@ -139,6 +139,26 @@ client.once("ready", () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
+  if (interaction.isStringSelectMenu()) {
+    if (interaction.customId === 'help-select') {
+      const commandName = interaction.values[0];
+      const command = interaction.client.commands.get(commandName);
+      if (!command) {
+        await interaction.reply({ content: `Command \`${commandName}\` not found.`, ephemeral: true });
+        return;
+      }
+      const embed = new (require('discord.js').EmbedBuilder)()
+        .setTitle(`Help: /${command.data.name}`)
+        .addFields(
+          { name: 'Name', value: command.data.name, inline: true },
+          { name: 'Description', value: command.data.description, inline: true }
+        )
+        .setColor(0x00AE86);
+      await interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+  }
+
   if (!interaction.isChatInputCommand()) return;
 
   const command = interaction.client.commands.get(interaction.commandName);
