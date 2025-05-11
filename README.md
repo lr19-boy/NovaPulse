@@ -17,9 +17,9 @@ A modular, feature-rich Discord bot designed for server management, games, and c
 
 ---
 
-## 📂 Project Structure
 
 ```
+## 📂 Project Structure
 
 NovaPulse/
 
