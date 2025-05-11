@@ -97,7 +97,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 💌 Contact
 
-**lr19-boy** - [GitHub Profile](https://github.com/yourusername)
+**lr19-boy** - [GitHub Profile](https://github.com/lr19-boy)
 
 ---
 
