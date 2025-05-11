@@ -33,7 +33,7 @@ NovaPulse/
 
 ````
 
----
+````
 
 ## ✨ Features
 
@@ -44,15 +44,15 @@ NovaPulse/
 - 📊 **User Info Commands**: Fetch user details and server stats.
 - 📦 Modular command system for easy extension.
 
----
+````
 
+````
 ## 📦 Installation
 
 1. **Clone the repo**
    ```bash
    git clone https://github.com/yourusername/NovaPulse.git
    cd NovaPulse
-````
 
 2. **Install dependencies**
 
