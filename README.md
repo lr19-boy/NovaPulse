@@ -22,6 +22,7 @@ A modular, feature-rich Discord bot designed for server management, games, and c
 ```
 
 NovaPulse/
+
 ├── commands/       # All bot commands (economy, games, moderation, tickets)
 
 ├── data/           # Data storage files
