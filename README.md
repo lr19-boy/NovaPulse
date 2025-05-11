@@ -73,8 +73,7 @@ NovaPulse/
 
 > 📸 A sneak peek of NovaPulse in action:
 
-![NovaPulse Dashboard](path/to/your/screenshot1.png)
-![Command Showcase](path/to/your/screenshot2.png)
+![NovaPulse Dashboard]([path/to/your/screenshot2.png](https://cdn.discordapp.com/attachments/1193506356943126572/1371099351191130262/image.png?ex=6821e747&is=682095c7&hm=78ef550242908739d67c7ca8c4715641841fa169be64a527a972a5c368270146&)
 
 ---
 
