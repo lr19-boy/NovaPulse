@@ -17,7 +17,7 @@ module.exports = {
     if (commandName) {
       const command = commands.get(commandName);
       if (!command) {
-        await interaction.reply({ content: `Command \`${commandName}\` not found.`, ephemeral: false });
+        await interaction.reply({ content: `Command \`${commandName}\` not found.`, ephemeral: true });
         return;
       }
       const embed = new EmbedBuilder()
@@ -27,7 +27,7 @@ module.exports = {
           { name: 'Description', value: command.data.description, inline: true }
         )
         .setColor(0x00AE86);
-      await interaction.reply({ embeds: [embed], ephemeral: false });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
     } else {
       const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 
@@ -51,7 +51,7 @@ module.exports = {
 
       const row = new ActionRowBuilder().addComponents(selectMenu);
 
-      await interaction.reply({ embeds: [embed], components: [row], ephemeral: false });
+      await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
     }
     logger.info(`Help command used by ${interaction.user.tag}`);
   },
