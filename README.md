@@ -105,7 +105,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ```
 
----
+```
 
 ### ✅ How to Use:
 - Replace `yourusername` with your actual GitHub username in badge links and contact section.
