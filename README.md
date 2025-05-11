@@ -31,10 +31,6 @@ NovaPulse/
 
 └── README.md       # This file
 
-````
-
-````
-
 ## ✨ Features
 
 - 🎮 **Games**: Play interactive games like Hangman, Trivia, and more!
