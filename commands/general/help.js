@@ -62,7 +62,7 @@ module.exports = {
 
       const row = new ActionRowBuilder().addComponents(selectMenu);
 
-      await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+      await interaction.reply({ embeds: [embed], components: [row], ephemeral: false });
     }
 
     logger.info(`Help command used by ${interaction.user.tag}`);
