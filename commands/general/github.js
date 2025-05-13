@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const axios = require('axios');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,12 +20,14 @@ module.exports = {
     const showRepos = interaction.options.getBoolean('repos') || false;
     const userUrl = `https://api.github.com/users/${username}`;
 
-    // Defer the reply to prevent interaction timeout
+    // Defer reply so we don't hit the 3-second interaction timeout
     await interaction.deferReply();
 
     try {
-      const userResponse = await axios.get(userUrl);
-      const user = userResponse.data;
+      // Fetch user data
+      const userResponse = await fetch(userUrl);
+      if (!userResponse.ok) throw new Error('GitHub user not found');
+      const user = await userResponse.json();
 
       let embed = {
         title: `${user.login}'s GitHub Profile`,
@@ -46,8 +47,9 @@ module.exports = {
 
       if (showRepos) {
         const reposUrl = `https://api.github.com/users/${username}/repos?per_page=5&sort=updated`;
-        const reposResponse = await axios.get(reposUrl);
-        const repos = reposResponse.data;
+        const reposResponse = await fetch(reposUrl);
+        if (!reposResponse.ok) throw new Error('Could not fetch repos');
+        const repos = await reposResponse.json();
 
         if (repos.length > 0) {
           const repoList = repos.map(repo => `[${repo.name}](${repo.html_url}) ⭐${repo.stargazers_count}`).join('\n');
