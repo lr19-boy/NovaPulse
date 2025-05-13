@@ -103,5 +103,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - Replace `yourusername` with your actual GitHub username in badge links and contact section.
 - If you have screenshots, drop them in a `screenshots/` folder and update the paths.
 - You can add a `LICENSE` file (MIT suggested in this case) for full open-source readiness.
-
-Would you like a dark-themed markdown preview too? I can render one for you. Want me to generate one? 🔥
