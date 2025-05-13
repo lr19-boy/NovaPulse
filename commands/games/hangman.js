@@ -1,31 +1,37 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js');
 
 const words = [
-  'javascript', 'discord', 'bot', 'nodejs', 'programming', 'hangman', 'challenge', 'developer', 'computer', 'algorithm'
+  'javascript', 'discord', 'bot', 'nodejs', 'programming',
+  'hangman', 'challenge', 'developer', 'computer', 'algorithm'
 ];
 
 function createWordDisplay(word, guessedLetters) {
   return word.split('').map(letter => (guessedLetters.has(letter) ? letter : '⬜')).join(' ');
 }
 
-function createLetterButtons(guessedLetters) {
-  const rows = [];
+function createLetterMenus(guessedLetters) {
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  for (let i = 0; i < letters.length; i += 5) {
-    const row = new ActionRowBuilder();
-    for (let j = i; j < i + 5 && j < letters.length; j++) {
-      const letter = letters[j];
-      row.addComponents(
-        new ButtonBuilder()
-          .setCustomId(`hangman_${letter}`)
-          .setLabel(letter.toUpperCase())
-          .setStyle(ButtonStyle.Primary)
-          .setDisabled(guessedLetters.has(letter))
-      );
-    }
-    rows.push(row);
-  }
-  return rows;
+
+  const chunk1 = letters.slice(0, 13);
+  const chunk2 = letters.slice(13);
+
+  const createMenu = (chunk, id) => {
+    const options = chunk.map(letter => ({
+      label: letter.toUpperCase(),
+      value: letter,
+      disabled: guessedLetters.has(letter)
+    }));
+
+    return new StringSelectMenuBuilder()
+      .setCustomId(id)
+      .setPlaceholder('Pick a letter')
+      .addOptions(options);
+  };
+
+  const row1 = new ActionRowBuilder().addComponents(createMenu(chunk1, 'hangman_select_1'));
+  const row2 = new ActionRowBuilder().addComponents(createMenu(chunk2, 'hangman_select_2'));
+
+  return [row1, row2];
 }
 
 module.exports = {
@@ -33,31 +39,31 @@ module.exports = {
     .setName('hangman')
     .setDescription('Play a game of Hangman'),
   cooldown: 10,
+
   async execute(interaction) {
     const word = words[Math.floor(Math.random() * words.length)];
     const guessedLetters = new Set();
     let wrongGuesses = 0;
-    const maxWrongGuesses = 10; // Increased max wrong guesses from 6 to 10
+    const maxWrongGuesses = 10;
 
     const embed = new EmbedBuilder()
       .setTitle('Hangman')
       .setDescription(`Word: ${createWordDisplay(word, guessedLetters)}\nWrong guesses: ${wrongGuesses}/${maxWrongGuesses}`)
       .setColor(0x0099FF);
 
-    const message = await interaction.reply({
+    await interaction.reply({
       embeds: [embed],
-      components: createLetterButtons(guessedLetters),
-      // fetchReply is deprecated, so remove it and fetch message after reply
+      components: createLetterMenus(guessedLetters)
     });
-    const fetchedMessage = await interaction.fetchReply();
 
-    const filter = i => i.customId.startsWith('hangman_') && i.user.id === interaction.user.id;
+    const message = await interaction.fetchReply();
+    const filter = i => i.customId.startsWith('hangman_select_') && i.user.id === interaction.user.id;
     const collector = message.createMessageComponentCollector({ filter, time: 600000 });
 
     collector.on('collect', async i => {
-      const letter = i.customId.split('_')[1];
+      const letter = i.values[0];
       if (guessedLetters.has(letter)) {
-        await i.reply({ content: 'You already guessed that letter!', flags: 64 }); // ephemeral flag
+        await i.reply({ content: 'You already guessed that letter!', flags: 64 });
         return;
       }
 
@@ -88,7 +94,7 @@ module.exports = {
         await i.update({ embeds: [updatedEmbed], components: [] });
         collector.stop();
       } else {
-        await i.update({ embeds: [updatedEmbed], components: createLetterButtons(guessedLetters) });
+        await i.update({ embeds: [updatedEmbed], components: createLetterMenus(guessedLetters) });
       }
     });
 
